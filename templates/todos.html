@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      th,
+      td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+      }
+
+      tr:hover {
+        background-color: #f5f5f5;
+      }
+
+      th {
+        background-color: #4caf50;
+        color: white;
+      }
+
+      button {
+        margin-top: 16px;
+        background-color: #4caf50;
+        border: none;
+        color: white;
+        text-decoration: none;
+        padding: 8px 16px;
+        border-radius: 4px;
+        font-size: 14px;
+        cursor: pointer;
+      }
+
+      button a {
+        color: white;
+        text-decoration: none;
+      }
+      tr th {
+        text-align: center;
+      }
+      tr td {
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <table>
+      <tr>
+        <th>Código do produto</th>
+        <th>Quantidade em estoque</th>
+        <th>Valor Unitário</th>
+        <th>Nome do produto</th>
+        <th>Descrição do produto</th>
+      </tr>
+      {% for x in range(0,tamanho) %}
+      <tr>
+        <td>{{dados[x]['codigo']}}</td>
+        <td class="center">{{dados[x]['quantidade']}}</td>
+        <td class="center">R$ {{dados[x]['preco']}}</td>
+        <td>{{dados[x]['nome']}}</td>
+        <td>{{dados[x]['descricao']}}</td>
+      </tr>
+      {% endfor %}
+    </table>
+    <button><a href="/">Voltar</a></button>
+  </body>
+</html>

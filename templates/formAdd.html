@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      input::-webkit-outer-spin-button,
+      input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+
+      /* Firefox */
+      input[type="number"] {
+        -moz-appearance: textfield;
+        appearance: textfield;
+      }
+
+      label {
+        display: inline-block;
+        width: 200px;
+        margin-bottom: 8px;
+      }
+
+      form {
+        margin-top: 16px;
+      }
+
+      input[type="number"],
+      input[type="text"] {
+        padding: 8px;
+        font-size: 14px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        width: 300px;
+        box-sizing: border-box;
+        margin-bottom: 8px;
+      }
+
+      input[type="submit"],
+      input[type="reset"],
+      .Voltar {
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        padding: 8px 16px;
+        text-decoration: none;
+        border-radius: 4px;
+        font-size: 14px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <form action="/addProduto" method="post">
+      <label for="codigo">Código do produto: </label>
+      <input type="number" name="codigo" required /> <br />
+      <label for="quantidade">Quantidade inicial do produto: </label>
+      <input type="number" name="quantidade" required /> <br />
+      <label for="preco">Preço unitario do produto: </label>
+      <input type="number" name="preco" step="any" required /> <br />
+      <label for="nome">Nome do produto: </label>
+      <input type="text" name="nome" required /> <br />
+      <label for="descricao">Descrição do produto: </label>
+      <input type="text" name="descricao" required /> <br />
+      <input type="submit" value="Adicionar Produto" />
+      <input type="reset" value="Limpar os campos" />
+      <input
+        type="button"
+        onclick="history.back();"
+        value="Voltar"
+        class="Voltar"
+      />
+    </form>
+  </body>
+</html>
