@@ -3,7 +3,6 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
     <style>
       table {
         width: 100%;
@@ -64,6 +63,10 @@
         color: white;
         text-decoration: none;
       }
+      a{
+        color: white;
+        text-decoration: none;
+      }
       .Voltar {
         margin-top: 1%;
         background-color: #4caf50;
@@ -76,26 +79,47 @@
         cursor: pointer;
       }
     </style>
+    <script>
+      function sortTable() {
+        var table = document.querySelector("table");
+        var rows = Array.from(table.rows).slice(1); // Exclude the table header row
+
+        rows.sort(function (a, b) {
+          var quantityA = parseInt(a.cells[1].textContent);
+          var quantityB = parseInt(b.cells[1].textContent);
+
+          return quantityA - quantityB;
+        });
+
+        while (table.rows.length > 1) {
+          table.deleteRow(1); // Remove existing rows except for the header row
+        }
+
+        rows.forEach(function (row) {
+          table.appendChild(row); // Append the sorted rows back to the table
+        });
+      }
+    </script>
+    <title>Controlador de estoque</title>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
   </head>
   <body>
     <table>
       <tr>
         <th>Código do produto</th>
-        <th>Quantidade em estoque</th>
-        <th>Valor Unitário</th>
+        <th>
+          <a href="javascript:void(0)" onclick="sortTable()">Quantidade em estoque</a>
+        </th>
         <th>Nome do produto</th>
-        <th>Descrição do produto</th>
       </tr>
-      {% for x in range(0,tamanho) %}
+      {% for x in range(0, tamanho) %}
       <tr>
-        <td>{{dados[x]['codigo']}}</td>
-        <td class="center">{{dados[x]['quantidade']}}</td>
-        <td class="center">R$ {{dados[x]['preco']}}</td>
-        <td>{{dados[x]['nome']}}</td>
-        <td>{{dados[x]['descricao']}}</td>
+        <td>{{ dados[x]['codigo'] }}</td>
+        <td class="center">{{ dados[x]['quantidade'] }}</td>
+        <td>{{ dados[x]['nome'] }}</td>
       </tr>
       {% endfor %}
     </table>
-    <button><a href="{{back}}" class="Voltar">Voltar</a></button>
+    <button><a href="{{ back }}" class="Voltar">Voltar</a></button>
   </body>
 </html>

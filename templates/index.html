@@ -4,11 +4,70 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+      }
+
+      header {
+        background-color: #333;
+        padding: 16px;
+        text-align: center;
+      }
+
+      header h1 {
+        color: #fff;
+        margin: 0;
+      }
+
+      footer {
+        background-color: #f5f5f5;
+        padding: 16px;
+        text-align: center;
+      }
+
+      footer p {
+        margin: 0;
+      }
+
+      button {
+        margin: 8px;
+        background-color: #4caf50;
+        border: none;
+        color: white;
+        text-decoration: none;
+        padding: 8px 16px;
+        border-radius: 4px;
+        font-size: 14px;
+        cursor: pointer;
+      }
+
+      button a {
+        color: white;
+        text-decoration: none;
+      }
+    </style>
+    <title>Controlador de estoque</title>
+    <link
+      rel="shortcut icon"
+      href="{{ url_for('static', filename='favicon.ico') }}"
+    />
   </head>
+
   <body>
-    <button><a href="/all">todos</a></button>
-    <button><a href="/formAdd">Adicionar produto</a></button>
-    <button><a href="/formSearchNome">Procurar produto por nome</a></button>
-    <button><a href="/formSearchCodigo">Procurar produto por codigo</a></button>
+    <header>
+      <h1>Controlador de estoque</h1>
+    </header>
+    <center>
+      <button><a href="/formAdicionarProduto">Entrada de produtos</a></button><br>
+      <button><a href="/formRemoverProduto">Saída de produtos</a></button><br>
+      <button><a href="/all">Mostrar todos os produtos cadastrados</a></button><br>
+      <button><a href="/formSearchNome">Pesquisar produtos por nome</a></button><br>
+      <button><a href="/formSearchCodigo">Pesquisar produto por código de barras</a></button><br>
+      <button><a href="/estoqueBaixo">Produtos com estoque baixo</a></button> 
+    </center>
+   
+
   </body>
 </html>

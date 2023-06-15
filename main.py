@@ -9,16 +9,55 @@ app = Flask(__name__)
 def home():
     return render_template('index.html')
 
+@app.route('/formRemoverProduto')
+def formRemoverProduto():
+    return render_template('formRemoverProduto.html')
+
+@app.route('/formAdicionarProduto')
+def formAdicionarProduto():
+    return render_template('formAdicionarProduto.html')
+
+@app.route('/adicionarProduto')
+def adicionarProduto():
+    data = int(request.args.get('codigo'))
+    quantidade = int(request.args.get('quantidade'))
+    response = requests.get(f'http://127.0.0.1:5000/receberProduto?codigo={data}&quantidade={quantidade}')
+    if response.text == 'produto nao encontrado':
+            return render_template('formAdd.html', codigo = data)
+    else:
+        return redirect('/formAdicionarProduto')
+    
+@app.route('/removerProduto')
+def removerProduto():
+    data = request.args.get('codigo')
+    quantidade = request.args.get('quantidade')
+    response = requests.get(f'http://127.0.0.1:5000/saidaProduto?codigo={data}&quantidade={quantidade}')
+    if response.text == 'produto nao encontrado':
+            return render_template('formAdd.html', codigo = data)
+    else:
+        return redirect('/formRemoverProduto')
+
+
+@app.route('/estoqueBaixo')
+def estoqueBaixo():
+    data = requests.get('http://127.0.0.1:5000/all')
+    data_dict = data.json()
+    estoquebaixo=[]
+    for x in data_dict:
+        if int(x.get('quantidade'))<20:
+            estoquebaixo.append(x)
+    if estoquebaixo.__len__ !=0:
+        return render_template("searchResults.html", dados=estoquebaixo, tamanho=len(estoquebaixo), back="/")
+
 
 @app.route('/formAdd')
 def formAdd():
-    return render_template('formAdd.html')
+    return render_template('formAdd.html', codigo = None)
 
 
 @app.route('/addProduto', methods=['POST'])
 def addProduto():
     data = request.form.to_dict()
-    print(json.dumps(data))
     requests.post('http://127.0.0.1:5000/addProduto', json=json.dumps(data))
     return redirect('/')
 
@@ -54,15 +93,16 @@ def searchNome():
     if data.json() != 0:
         data_dict = data.json()
         produto.append(data_dict)
-        return render_template('searchResults.html', dados=produto, tamanho=len(produto), back='/formSearchNome')
+        if type(data.json()) == type(produto):
+            return render_template('searchResults.html', dados=data_dict, tamanho=len(data_dict), back='/formSearchNome')
+        else:
+            return render_template('searchResults.html', dados=produto, tamanho=len(produto), back='/formSearchNome')
     else:
         return render_template('nameNotFound.html')
 
 
 @app.route('/all')
 def mostrarTodos():
-    teste = requests.get('http://brasilapi.simplescontrole.com.br/mercadoria/consulta/?ean=7894900700046&access-token=51C7VNFHTVXYPSZFovlAVHBoWiFLpK6u&_format=json')
-    print(teste.json())
     data = requests.get('http://127.0.0.1:5000/all')
     data_dict = data.json()
     for x in range(0, len(data_dict)):

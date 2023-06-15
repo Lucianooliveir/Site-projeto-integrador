@@ -63,6 +63,8 @@
         cursor: pointer;
       }
     </style>
+        <title>Controlador de estoque</title>
+        <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
   </head>
   <body>
     <h3>Produto não encontrado!</h3>
@@ -70,12 +72,8 @@
       <label for="nome">Digite o codigo do produto: </label>
       <input type="number" name="codigo" required />
       <input type="submit" value="Pesquisar" />
-      <input
-        type="button"
-        onclick="history.back();"
-        value="Voltar"
-        class="Voltar"
-      />
+      <button><a href="/" class="Voltar">Voltar</a></button>
+
     </form>
   </body>
 </html>
