@@ -4,6 +4,7 @@ import json
 
 app = Flask(__name__)
 
+api = 'https://servidor-projeto-integrador.eunaoseicara4.repl.co'
 
 @app.route('/')
 def home():
@@ -21,7 +22,7 @@ def formAdicionarProduto():
 def adicionarProduto():
     data = int(request.args.get('codigo'))
     quantidade = int(request.args.get('quantidade'))
-    response = requests.get(f'http://127.0.0.1:5000/receberProduto?codigo={data}&quantidade={quantidade}')
+    response = requests.get(f'{api}/receberProduto?codigo={data}&quantidade={quantidade}')
     if response.text == 'produto nao encontrado':
             return render_template('formAdd.html', codigo = data)
     else:
@@ -31,7 +32,7 @@ def adicionarProduto():
 def removerProduto():
     data = request.args.get('codigo')
     quantidade = request.args.get('quantidade')
-    response = requests.get(f'http://127.0.0.1:5000/saidaProduto?codigo={data}&quantidade={quantidade}')
+    response = requests.get(f'{api}/saidaProduto?codigo={data}&quantidade={quantidade}')
     if response.text == 'produto nao encontrado':
             return render_template('formAdd.html', codigo = data)
     else:
@@ -40,7 +41,7 @@ def removerProduto():
 
 @app.route('/estoqueBaixo')
 def estoqueBaixo():
-    data = requests.get('http://127.0.0.1:5000/all')
+    data = requests.get(f'{api}/all')
     data_dict = data.json()
     estoquebaixo=[]
     for x in data_dict:
@@ -58,7 +59,7 @@ def formAdd():
 @app.route('/addProduto', methods=['POST'])
 def addProduto():
     data = request.form.to_dict()
-    requests.post('http://127.0.0.1:5000/addProduto', json=json.dumps(data))
+    requests.post(f'{api}/addProduto', json=json.dumps(data))
     return redirect('/')
 
 
@@ -71,7 +72,7 @@ def formSearchCodigo():
 def searchCodigo():
     produto = []
     form = request.args.get('codigo')
-    data = requests.get(f'http://127.0.0.1:5000/pesquisarCodigo?codigo={form}')
+    data = requests.get(f'{api}/pesquisarCodigo?codigo={form}')
     if data.json() != 0:
         data_dict = data.json()
         produto.append(data_dict)
@@ -89,7 +90,7 @@ def formSearchNome():
 def searchNome():
     produto = []
     form = request.args.get('nome')
-    data = requests.get(f'http://127.0.0.1:5000/pesquisarNome?nome={form}')
+    data = requests.get(f'{api}/pesquisarNome?nome={form}')
     if data.json() != 0:
         data_dict = data.json()
         produto.append(data_dict)
@@ -103,7 +104,7 @@ def searchNome():
 
 @app.route('/all')
 def mostrarTodos():
-    data = requests.get('http://127.0.0.1:5000/all')
+    data = requests.get(f'{api}/all')
     data_dict = data.json()
     for x in range(0, len(data_dict)):
         data_dict[x]['preco'] = format(float(data_dict[x]['preco']), '.2f')
