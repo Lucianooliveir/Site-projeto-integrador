@@ -4,7 +4,7 @@ import json
 
 app = Flask(__name__)
 
-api = 'https://servidor-projeto-integrador.eunaoseicara4.repl.co'
+api = 'http://localhost:5000'
 
 @app.route('/')
 def home():
@@ -105,7 +105,8 @@ def searchNome():
 @app.route('/all')
 def mostrarTodos():
     data = requests.get(f'{api}/all')
-    data_dict = data.json()
-    for x in range(0, len(data_dict)):
-        data_dict[x]['preco'] = format(float(data_dict[x]['preco']), '.2f')
-    return render_template("searchResults.html", dados=data_dict, tamanho=len(data_dict), back="/")
+    if data.json() != 0:
+        data_dict = data.json()
+        for x in range(0, len(data_dict)):
+            data_dict[x]['preco'] = format(float(data_dict[x]['preco']), '.2f')
+        return render_template("searchResults.html", dados=data_dict, tamanho=len(data_dict), back="/")
